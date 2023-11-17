@@ -11,24 +11,22 @@ const Header = (baslik, tarih, yazi) => {
   //    <span class="temp">{ yazi }</span>
   //  </div>
   //
-  const header = document.createElement("div");
-  const date = document.createElement("span");
-  const h1 = document.createElement("h1");
-  const temp = document.createElement("span");
+  const divHeader = document.createElement("div");
+  divHeader.classList.add("header");
 
-  header.append(date, h1, temp);
+  const spanDate = document.createElement("span");
+  spanDate.classList.add("date");
+  spanDate.textContent = tarih;
 
-  header.classList.add("header");
-  date.classList.add("date");
-  temp.classList.add("temp");
+  const h1Title = document.createElement("h1");
+  h1Title.textContent = baslik;
 
-  date.textContent = tarih;
-  h1.textContent = baslik;
-  temp.textContent = yazi;
+  const spanTemp = document.createElement("span");
+  spanTemp.classList.add("temp");
+  spanTemp.textContent = yazi;
 
-  console.log(header);
-
-  return header;
+  divHeader.append(spanDate, h1Title, spanTemp);
+  return divHeader;
 };
 
 const headerEkleyici = (secici) => {
@@ -39,11 +37,13 @@ const headerEkleyici = (secici) => {
   // Oluşturulan header'i, verilen seçiciyle eşleşen DOM'daki öğeye eklemelidir.
   //
 
+  document
+    .querySelector(secici)
+    .append(
+      Header("JavaScript Dünyası", new Date(), "Web Dünyasının şımarık çocuğu")
+    );
   // İPUCU: querySelector bir string alabilir (bknz: querySelector("#wrapper"))
   // fakat aynı zamanda bir değişken de alabilir (bknz: querySelector(secici))
-
-  const container = document.querySelector(secici);
-  container.append(Header("Teknoloji Zamanı", new Date(), "Sıcaklık 21C"));
 };
 
 export { Header, headerEkleyici };

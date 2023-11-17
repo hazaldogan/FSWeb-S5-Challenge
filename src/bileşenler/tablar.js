@@ -1,5 +1,4 @@
 import axios from "axios";
-
 const Tablar = (konu) => {
   // GÖREV 3
   // ---------------------
@@ -18,11 +17,11 @@ const Tablar = (konu) => {
   const topics = document.createElement("div");
   topics.classList.add("topics");
 
-  konu.forEach((k) => {
+  konu.map((item) => {
     const tab = document.createElement("div");
     tab.classList.add("tab");
-    tab.textContent = k;
-    topics.append(tab);
+    tab.textContent = item;
+    topics.appendChild(tab);
   });
   return topics;
 };
@@ -35,18 +34,17 @@ const tabEkleyici = (secici) => {
   // Yanıtın içindeki konu dizisini bulun ve Tablar bileşenini kullanarak tabları oluşturun.
   // Tabları, fonksiyona iletilen seçiciyle eşleşen DOM'daki öğeye ekleyin.
   //
+  const tabsContainer = document.querySelector(secici);
   axios
     .get("http://localhost:5001/api/konular")
-    .then(function (res) {
-      console.log(res);
-      const konular = res.data.konular;
-      const tablarContainer = document.querySelector(secici);
-      const tablar = Tablar(konular);
-      tablarContainer.append(tablar);
+    .then((res) => {
+      const tabs = Tablar(res.data.konular);
+      tabsContainer.appendChild(tabs);
     })
-    .catch(function (err) {
-      console.log(err);
-    })
-    .finally(function () {});
+    .catch((error) => {
+      tabsContainer.textContent = "404 Not Found!";
+      console.log(error);
+    });
 };
+
 export { Tablar, tabEkleyici };
